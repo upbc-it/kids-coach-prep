@@ -140,9 +140,11 @@
       "Local Mentor Bank"
     ];
 
+
     // Multi-Select Emotional Check-In Options (Matches MS Form Schema)
     const EMOTIONAL_CHECKIN_OPTIONS = [
       "Frustration or anger about your participant",
+"Intimidation, threats or physical assault by your participant",
       "Strong anxiety about your participant",
       "Uncertainty about boundaries or next steps",
       "Encouraged / positive momentum",
@@ -813,7 +815,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Mentor's Name</label>
-              <input type="text" id="profileMentorName" oninput="saveProfileFromInputs()" placeholder="e.g. Jason Hoet" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-coach-teal focus:bg-white">
+              <input type="text" id="profileMentorName" oninput="saveProfileFromInputs()" placeholder="e.g. First LastName" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-coach-teal focus:bg-white">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Participant's Initials (No Full Names)</label>
@@ -821,11 +823,11 @@
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Teacher / Chaplain Name</label>
-              <input type="text" id="prof-teacher" oninput="saveProfileFromInputs()" placeholder="e.g. Ms. Taylor" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-coach-teal focus:bg-white">
+              <input type="text" id="prof-teacher" oninput="saveProfileFromInputs()" placeholder="e.g. Ms. Teacher" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-coach-teal focus:bg-white">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Partner School</label>
-              <input type="text" id="prof-school" oninput="saveProfileFromInputs()" value="Goodwood Primary" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-coach-teal focus:bg-white">
+              <input type="text" id="prof-school" oninput="saveProfileFromInputs()" placeholder="Primary School" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-coach-teal focus:bg-white">
             </div>
           </div>
 
