@@ -1158,21 +1158,9 @@
             </div>
           </div>
 
-          <!-- Pilot Feedback & Emotional Check-In -->
+          <!-- Emotional Check-In -->
           <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <span class="text-xs font-extrabold text-coach-navy">Session & Mentor Check-In</span>
-              <div class="flex items-center gap-3 text-xs">
-                <div class="flex items-center gap-1.5">
-                  <span class="text-slate-600 font-semibold">Engagement:</span>
-                  <div id="pilot-engagement-pills" class="flex gap-1"></div>
-                </div>
-                <div class="flex items-center gap-1.5">
-                  <span class="text-slate-600 font-semibold">Try again:</span>
-                  <div id="pilot-again-pills" class="flex gap-1"></div>
-                </div>
-              </div>
-            </div>
+            <span class="text-xs font-extrabold text-coach-navy">Session & Mentor Check-In</span>
 
             <div class="space-y-1.5">
               <label class="block text-[11px] font-bold text-slate-600">Mentor Check-In (Optional — Multi-select)</label>
@@ -1418,8 +1406,6 @@
       joyRating: 4,
       connectionRating: 4,
       overallRating: 4,
-      pilotEngagement: 'High',
-      pilotAgain: 'Yes',
       emotionalFlags: []
     };
 
@@ -2410,27 +2396,6 @@
       renderRatingRow('rating-connection-pills', 'connectionRating');
       renderRatingRow('rating-overall-pills', 'overallRating');
 
-      // Pilot Feedback Toggles
-      const engagements = ['Low', 'Medium', 'High'];
-      document.getElementById('pilot-engagement-pills').innerHTML = engagements.map(val => {
-        const active = checkInState.pilotEngagement === val;
-        return `
-          <button type="button" onclick="setPilotEngagement('${val}')" class="px-3 py-1 rounded-lg text-xs font-bold border ${
-            active ? 'bg-coach-teal text-white border-coach-teal' : 'bg-white text-slate-600 border-slate-200'
-          }">${val}</button>
-        `;
-      }).join('');
-
-      const againOpts = ['Yes', 'No', 'Not Yet'];
-      document.getElementById('pilot-again-pills').innerHTML = againOpts.map(val => {
-        const active = checkInState.pilotAgain === val;
-        return `
-          <button type="button" onclick="setPilotAgain('${val}')" class="px-3 py-1 rounded-lg text-xs font-bold border ${
-            active ? 'bg-coach-navy text-white border-coach-navy' : 'bg-white text-slate-600 border-slate-200'
-          }">${val}</button>
-        `;
-      }).join('');
-
       // Emotional Check-In Multi-Select
       document.getElementById('emotional-checkin-list').innerHTML = EMOTIONAL_CHECKIN_OPTIONS.map(flag => {
         const checked = checkInState.emotionalFlags.includes(flag);
@@ -2478,18 +2443,6 @@
       updateMsFormHref();
     }
 
-    function setPilotEngagement(val) {
-      checkInState.pilotEngagement = val;
-      renderCheckInControls();
-      updateMsFormHref();
-    }
-
-    function setPilotAgain(val) {
-      checkInState.pilotAgain = val;
-      renderCheckInControls();
-      updateMsFormHref();
-    }
-
     function toggleEmotionalFlag(flag) {
       const idx = checkInState.emotionalFlags.indexOf(flag);
       if (idx > -1) checkInState.emotionalFlags.splice(idx, 1);
@@ -2511,8 +2464,6 @@
       const risks = (document.getElementById('ci-risks')?.value || '').trim();
       const anythingElse = (document.getElementById('ci-anything-else')?.value || '').trim();
 
-      const pilotTag = `[Engagement: ${checkInState.pilotEngagement} | Choose again: ${checkInState.pilotAgain}]`;
-      const activitiesCombined = rawActivities ? `${rawActivities} ${pilotTag}` : pilotTag;
       const updatesCombined = `[${checkInState.triageAlert}] ${rawUpdates}`.trim();
 
       if (mentorName) params.set(MS_FORM_FIELDS.mentorName, mentorName);
@@ -2524,7 +2475,7 @@
       if (meetingDate) params.set(MS_FORM_FIELDS.meetingDate, JSON.stringify(meetingDate));
 
       params.set(MS_FORM_FIELDS.joyRating, String(checkInState.joyRating));
-      if (activitiesCombined) params.set(MS_FORM_FIELDS.activities, activitiesCombined);
+      if (rawActivities) params.set(MS_FORM_FIELDS.activities, rawActivities);
       if (updatesCombined) params.set(MS_FORM_FIELDS.updates, updatesCombined);
       if (risks) params.set(MS_FORM_FIELDS.risks, risks);
 
@@ -2563,7 +2514,7 @@
         `Kids COACH Check-In (${date})`,
         `Mentor: ${mentorName} | Participant: ${initials} | School: ${school}`,
         `Status: ${checkInState.triageAlert} | Joy or satisfaction from progress: ${checkInState.joyRating}/5 | Connection: ${checkInState.connectionRating}/5 | Overall: ${checkInState.overallRating}/5`,
-        `Activities: ${activities} (Engagement: ${checkInState.pilotEngagement}, Again: ${checkInState.pilotAgain})`,
+        activities ? `Activities: ${activities}` : '',
         updates ? `Updates: ${updates}` : '',
         risks ? `Risks/Follow-up: ${risks}` : ''
       ].filter(Boolean).join('\n');
