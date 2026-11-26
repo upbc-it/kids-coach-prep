@@ -914,7 +914,7 @@
           <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
             3. Available Equipment / Gear
           </span>
-          <div id="gear-filter-pills" class="grid grid-cols-3 gap-1.5 pb-1"></div>
+          <div id="gear-filter-pills" class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 pt-1"></div>
         </div>
       </div>
 
@@ -1913,18 +1913,18 @@
         `;
       }).join('');
 
-      document.getElementById('gear-filter-pills').innerHTML = GEARS.map(g => {
-        const active = selectedGear === g.id;
-        return `
-          <button type="button" onclick="setGear('${g.id}')" class="touch-target px-3 py-2 rounded-xl text-xs font-bold text-center border transition-all ${
-            active
-              ? 'bg-coach-navy text-white border-coach-navy'
-              : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-          }">
-            ${g.label}
-          </button>
-        `;
-      }).join('');
+document.getElementById('gear-filter-pills').innerHTML = GEARS.map(g => {
+  const active = selectedGear === g.id;
+  return `
+    <button type="button" onclick="setGear('${g.id}')" class="touch-target w-full px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold leading-snug text-center flex items-center justify-center border transition-all ${
+      active
+        ? 'bg-coach-navy text-white border-coach-navy shadow-xs'
+        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+    }">
+      ${escapeHtml(g.label)}
+    </button>
+  `;
+}).join('');
     }
 
     function setStage(id) {
