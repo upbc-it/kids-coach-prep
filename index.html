@@ -42,6 +42,25 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+    /* responsive settings */
+    .library-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .library-theme-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .library-theme-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+    
     /* Ensure native mobile anchor button behaves cleanly as a link rather than selectable text */
     .native-cta-link {
       -webkit-user-select: none;
@@ -950,9 +969,8 @@
           </div>
         </div>
 
-        <!-- Theme Filter Pills -->
-        <div id="library-theme-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1"></div>
-      </div>
+<!-- Theme Filter Pills -->
+<div id="library-theme-pills" class="library-theme-grid pt-1"></div>
 
       <div id="library-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     </section>
@@ -2154,20 +2172,20 @@
     }
 
     // --- ACTIVITY LIBRARY ---
-    function renderLibraryThemes() {
-      document.getElementById('library-theme-pills').innerHTML = LIBRARY_THEMES.map(theme => {
-        const active = selectedLibraryTheme === theme;
-        return `
-          <button type="button" onclick="setLibraryTheme('${theme}')" class="touch-target px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap border transition-all ${
-            active
-              ? 'bg-coach-navy text-white border-coach-navy'
-              : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-          }">
-            ${theme}
-          </button>
-        `;
-      }).join('');
-    }
+function renderLibraryThemes() {
+  document.getElementById('library-theme-pills').innerHTML = LIBRARY_THEMES.map(theme => {
+    const active = selectedLibraryTheme === theme;
+    return `
+      <button type="button" onclick="setLibraryTheme('${theme}')" class="touch-target w-full px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold leading-snug text-center flex items-center justify-center border transition-all ${
+        active
+          ? 'bg-coach-navy text-white border-coach-navy shadow-xs'
+          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+      }">
+        ${escapeHtml(theme)}
+      </button>
+    `;
+  }).join('');
+}
 
     function setLibraryTheme(theme) {
       selectedLibraryTheme = theme;
